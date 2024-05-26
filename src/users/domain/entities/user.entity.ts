@@ -15,16 +15,16 @@ export class UserEntity extends Entity<UserProps> {
     this.props.createdAt = this.props.createdAt ?? new Date()
   }
 
-  update(name: string): void {
-    this.name = name
+  update(value: string): void {
+    this.props.name = value
   }
 
-  private set name(name: string) {
-    this.name = name
+  private set name(value: string) {
+    this.props.name = value
   }
 
-  updatePassword(password: string): void {
-    this.password = password
+  updatePassword(value: string): void {
+    this.props.password = value
   }
 
   get name() {
@@ -39,8 +39,8 @@ export class UserEntity extends Entity<UserProps> {
     return this.props.password
   }
 
-  private set password(password: string) {
-    this.password = password
+  private set password(value: string) {
+    this.props.password = value
   }
 
   get createdAt() {
