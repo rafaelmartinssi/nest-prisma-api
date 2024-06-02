@@ -79,4 +79,21 @@ describe('InMemoryRepository unit tests', () => {
     await sut.update(updatedEntity)
     expect(updatedEntity.toJSON()).toStrictEqual(sut.items[0].toJSON())
   })
+
+  it('Should throw error when entity not found on delete', async () => {
+    expect(sut.delete('fakeId')).rejects.toThrow(
+      new NotFoundError('Entity not found'),
+    )
+  })
+
+  it('Should delete an entity', async () => {
+    const entity = new StubEntity({
+      name: 'Value',
+      price: 10,
+    })
+    await sut.insert(entity)
+
+    await sut.delete(entity.id)
+    expect(sut.items).toHaveLength(0)
+  })
 })
