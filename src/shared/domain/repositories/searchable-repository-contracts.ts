@@ -18,12 +18,12 @@ export class SearchParams {
   protected _sortDir: SortDirection | null
   protected _filter: string | null
 
-  constructor(props: SearchProps) {
-    this._page = props.page
-    this._perPage = props.perPage
-    this._sort = props.sort
-    this._sortDir = props.sortDir
-    this._filter = props.filter
+  constructor(props: SearchProps = {}) {
+    this.page = props.page
+    this.perPage = props.perPage
+    this.sort = props.sort
+    this.sortDir = props.sortDir
+    this.filter = props.filter
   }
 
   get page() {
@@ -41,7 +41,7 @@ export class SearchParams {
     return this._perPage
   }
   private set perPage(perPage: number) {
-    let _perPage = +perPage
+    let _perPage = perPage === (true as any) ? this._perPage : +perPage
     if (
       Number.isNaN(_perPage) ||
       _perPage <= 0 ||
@@ -56,7 +56,7 @@ export class SearchParams {
     return this._sort
   }
   private set sort(sort: string | null) {
-    this.sort =
+    this._sort =
       sort === null || sort === undefined || sort === '' ? null : String(sort)
   }
 
@@ -65,7 +65,7 @@ export class SearchParams {
   }
   private set sortDir(sortDir: string | null) {
     if (!this.sort) {
-      this.sortDir = null
+      this._sortDir = null
       return
     }
     const dir = String(sortDir).toLocaleLowerCase()
@@ -76,7 +76,7 @@ export class SearchParams {
     return this._filter
   }
   private set filter(filter: string | null) {
-    this.sort =
+    this._filter =
       filter === null || filter === undefined || filter === ''
         ? null
         : String(filter)
@@ -85,7 +85,7 @@ export class SearchParams {
 
 export interface SearchableRepositoryInterface<
   E extends Entity,
-  SeachInput,
+  SearchParams,
   SearchOutput,
 > extends RepositoryInterface<E> {
   search(props: SearchParams): Promise<SearchOutput>
