@@ -90,8 +90,6 @@ describe('InMemoryRepository unit tests', () => {
       ]
 
       let itemsSorted = await sut['applySort'](items, 'name', 'asc')
-      console.log(itemsSorted)
-      console.log(items)
       expect(itemsSorted).toStrictEqual([items[2], items[0], items[1]])
 
       itemsSorted = await sut['applySort'](items, 'name', 'desc')
@@ -99,7 +97,31 @@ describe('InMemoryRepository unit tests', () => {
     })
   })
 
-  describe('applyPaginate method', () => {})
+  describe('applyPaginate method', () => {
+    it('Should paginate items', async () => {
+      const items = [
+        new StubEntity({ name: 'a', price: 10 }),
+        new StubEntity({ name: 'b', price: 10 }),
+        new StubEntity({ name: 'c', price: 10 }),
+        new StubEntity({ name: 'd', price: 10 }),
+        new StubEntity({ name: 'e', price: 10 }),
+        new StubEntity({ name: 'f', price: 10 }),
+        new StubEntity({ name: 'g', price: 10 }),
+      ]
+
+      let itemsPaginate = await sut['applyPaginate'](items, 1, 3)
+      expect(itemsPaginate).toStrictEqual([items[0], items[1], items[2]])
+
+      itemsPaginate = await sut['applyPaginate'](items, 2, 3)
+      expect(itemsPaginate).toStrictEqual([items[3], items[4], items[5]])
+
+      itemsPaginate = await sut['applyPaginate'](items, 3, 3)
+      expect(itemsPaginate).toStrictEqual([items[6]])
+
+      itemsPaginate = await sut['applyPaginate'](items, 4, 3)
+      expect(itemsPaginate).toStrictEqual([])
+    })
+  })
 
   describe('search method', () => {})
 })
