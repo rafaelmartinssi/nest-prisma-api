@@ -48,17 +48,16 @@ export abstract class InMemorySearchableRepository<E extends Entity>
     if (!sort || !this.sortableFields.includes(sort)) {
       return items
     }
-    return [
-      ...items.sort((a, b) => {
-        if (a.props[sort] < b.props[sort]) {
-          return sortDir === 'asc' ? -1 : 1
-        }
-        if (a.props[sort] > b.props[sort]) {
-          return sortDir === 'asc' ? 1 : -1
-        }
-        return 0
-      }),
-    ]
+
+    return [...items].sort((a, b) => {
+      if (a.props[sort] < b.props[sort]) {
+        return sortDir === 'asc' ? -1 : 1
+      }
+      if (a.props[sort] > b.props[sort]) {
+        return sortDir === 'asc' ? 1 : -1
+      }
+      return 0
+    })
   }
 
   protected async applyPaginate(
