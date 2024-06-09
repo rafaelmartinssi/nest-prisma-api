@@ -295,5 +295,61 @@ describe('InMemoryRepository unit tests', () => {
         }),
       )
     })
+
+    it('Should apply paginate, sort and filter', async () => {
+      const items = [
+        new StubEntity({ name: 'b', price: 10 }),
+        new StubEntity({ name: 'a', price: 10 }),
+        new StubEntity({ name: 'd', price: 10 }),
+        new StubEntity({ name: 'a', price: 10 }),
+        new StubEntity({ name: 'e', price: 10 }),
+        new StubEntity({ name: 'c', price: 10 }),
+        new StubEntity({ name: 'a', price: 10 }),
+      ]
+
+      sut.items = items
+
+      let params = await sut.search(
+        new SearchParams({
+          page: 1,
+          perPage: 2,
+          sort: 'name',
+          filter: 'a',
+        }),
+      )
+
+      expect(params).toStrictEqual(
+        new SearchResult({
+          items: [items[1], items[3]],
+          total: 3,
+          currentPage: 1,
+          perPage: 2,
+          sort: 'name',
+          sortDir: 'desc',
+          filter: 'a',
+        }),
+      )
+
+      params = await sut.search(
+        new SearchParams({
+          page: 2,
+          perPage: 2,
+          sort: 'name',
+          filter: 'a',
+        }),
+      )
+
+      expect(params).toStrictEqual(
+        new SearchResult({
+          items: [items[6]],
+          total: 3,
+          currentPage: 2,
+          perPage: 2,
+          sort: 'name',
+          sortDir: 'desc',
+          filter: 'a',
+        }),
+      )
+    })
   })
 })
