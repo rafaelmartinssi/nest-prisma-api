@@ -64,8 +64,10 @@ export abstract class InMemorySearchableRepository<E extends Entity>
   protected async applyPaginate(
     items: E[],
     page: SearchParams['page'],
-    sortDir: SearchParams['perPage'],
+    perPage: SearchParams['perPage'],
   ): Promise<E[]> {
-    return null
+    const start = page - 1 * perPage
+    const limit = start + perPage
+    return items.slice(start, limit)
   }
 }
