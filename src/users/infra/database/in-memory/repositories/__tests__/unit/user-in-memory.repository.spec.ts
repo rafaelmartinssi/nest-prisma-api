@@ -19,7 +19,7 @@ describe('UserInMemoryRepository unit tests', () => {
 
   it('Should find a entity by email', async () => {
     const entity = new UserEntity(userDataBuilder({}))
-    sut.insert(entity)
+    await sut.insert(entity)
     const result = await sut.findByEmail(entity.email)
     expect(entity.toJSON()).toStrictEqual(result.toJSON())
   })
@@ -35,5 +35,27 @@ describe('UserInMemoryRepository unit tests', () => {
   it('Should not throw error when found a entity', async () => {
     expect.assertions(0)
     await sut.emailExists('a@a.com')
+  })
+
+  it('Should no filter items when filter object is null ', async () => {
+    const entity = new UserEntity(userDataBuilder({}))
+    await sut.insert(entity)
+    const result = await sut.findAll()
+    const spyFilter = jest.spyOn(result, 'filter')
+    const itemsFiltered = await sut['applyFilter'](result, null)
+    expect(spyFilter).not.toHaveBeenCalled()
+    expect(itemsFiltered).toStrictEqual(result)
+  })
+
+  it('Should no filter items when filter object is null ', async () => {
+    const items = [
+      new UserEntity(userDataBuilder({ name: 'Test' })),
+      new UserEntity(userDataBuilder({ name: 'TEST' })),
+      new UserEntity(userDataBuilder({ name: 'fake' })),
+    ]
+    const spyFilter = jest.spyOn(items, 'filter')
+    const itemsFiltered = await sut['applyFilter'](items, 'TEST')
+    expect(spyFilter).toHaveBeenCalled()
+    expect(itemsFiltered).toStrictEqual([items[0], items[1]])
   })
 })
