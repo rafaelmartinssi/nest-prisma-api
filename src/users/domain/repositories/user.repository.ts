@@ -5,15 +5,15 @@ import {
   SearchableRepositoryInterface,
 } from '@/shared/domain/repositories/searchable-repository-contracts'
 
-export type Filter = string
+export type UserFilter = string
 
-export class UserSearchParams extends SearchParams<Filter> {}
+export class UserSearchParams extends SearchParams<UserFilter> {}
 
-export class UserSearchResult extends SearchResult<UserEntity, Filter> {}
+export class UserSearchResult extends SearchResult<UserEntity, UserFilter> {}
 export interface UserRepository
   extends SearchableRepositoryInterface<
     UserEntity,
-    Filter,
+    UserFilter,
     UserSearchParams,
     UserSearchResult
   > {
