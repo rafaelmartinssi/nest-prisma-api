@@ -2,19 +2,12 @@ import { HashProvider } from '@/shared/application/providers/hash-provider'
 import { BadRequestError } from '@/shared/domain/errors/bad-request-error'
 import { UserEntity } from '@/users/domain/entities/user.entity'
 import { UserRepository } from '@/users/domain/repositories/user.repository'
+import { OutputUser } from '../dtos/OutputUser'
 
 export type InputSignup = {
   name: string
   email: string
   password: string
-}
-
-export type OutputSignup = {
-  id: string
-  name: string
-  email: string
-  password: string
-  createdAt: Date
 }
 
 export class SignupUseCase {
@@ -23,7 +16,7 @@ export class SignupUseCase {
     private hashProvider: HashProvider,
   ) {}
 
-  async execute(input: InputSignup): Promise<OutputSignup> {
+  async execute(input: InputSignup): Promise<OutputUser> {
     const { name, email, password } = input
 
     if (!name || !email || !password) {
