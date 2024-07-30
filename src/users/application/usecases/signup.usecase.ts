@@ -3,6 +3,7 @@ import { BadRequestError } from '@/shared/domain/errors/bad-request-error'
 import { UserEntity } from '@/users/domain/entities/user.entity'
 import { UserRepository } from '@/users/domain/repositories/user.repository'
 import { OutputUser } from '../dtos/OutputUser'
+import { UseCase } from '@/shared/application/usecases/use-cases'
 
 export type InputSignup = {
   name: string
@@ -10,7 +11,7 @@ export type InputSignup = {
   password: string
 }
 
-export class SignupUseCase {
+export class SignupUseCase implements UseCase<InputSignup, OutputUser> {
   constructor(
     private userRepository: UserRepository,
     private hashProvider: HashProvider,

@@ -1,11 +1,12 @@
 import { UserRepository } from '@/users/domain/repositories/user.repository'
 import { OutputUser } from '../dtos/OutputUser'
+import { UseCase } from '@/shared/application/usecases/use-cases'
 
 export type InputGetuser = {
   id: string
 }
 
-export class GetuserUseCase {
+export class GetuserUseCase implements UseCase<InputGetuser, OutputUser> {
   constructor(private userRepository: UserRepository) {}
 
   async execute(input: InputGetuser): Promise<OutputUser> {
