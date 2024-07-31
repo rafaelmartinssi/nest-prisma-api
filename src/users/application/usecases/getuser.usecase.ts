@@ -1,5 +1,5 @@
 import { UserRepository } from '@/users/domain/repositories/user.repository'
-import { OutputUser } from '../dtos/OutputUser'
+import { OutputUser } from '../dtos/output-user'
 import { UseCase } from '@/shared/application/usecases/use-cases'
 
 export type InputGetuser = {

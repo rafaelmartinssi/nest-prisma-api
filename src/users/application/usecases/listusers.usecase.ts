@@ -3,7 +3,7 @@ import {
   UserSearchParams,
   UserSearchResult,
 } from '@/users/domain/repositories/user.repository'
-import { OutputUser, UserOutputMapper } from '../dtos/OutputUser'
+import { OutputUser, UserOutputMapper } from '../dtos/output-user'
 import { UseCase } from '@/shared/application/usecases/use-cases'
 import { SearchInput } from '@/shared/application/dtos/search-input'
 import {

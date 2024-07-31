@@ -2,7 +2,7 @@ import { HashProvider } from '@/shared/application/providers/hash-provider'
 import { BadRequestError } from '@/shared/domain/errors/bad-request-error'
 import { UserEntity } from '@/users/domain/entities/user.entity'
 import { UserRepository } from '@/users/domain/repositories/user.repository'
-import { OutputUser } from '../dtos/OutputUser'
+import { OutputUser } from '../dtos/output-user'
 import { UseCase } from '@/shared/application/usecases/use-cases'
 
 export type InputSignup = {
